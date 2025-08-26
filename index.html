@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"
+          integrity="sha256-9zljDKpE/mQxmaR4V2cGVaQ7arF3CcXxarvgr7Sj8Uc="
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 0.1rem;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .menu {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      margin: 0;
+      margin-right:1%;
+      padding: 0;
+    }
+    nav .menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .logo img {
+      max-height: 50px;
+      height: auto;
+      width: auto;
+    }
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .container {
+      display: flex;
+      gap: 2%;
+      margin: 1%;
+      flex: 1 0 auto;
+    }
+    .sidebar {
+      flex: 24%;
+      background: url('afbeeldingen/graniet.jpg') center/cover;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1%;
+      position: relative;
+      overflow: visible;
+    }
+    .button-wrapper {
+      position: relative;
+      height: 18%;
+    }
+    .button-wrapper .hole {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      transition: background-color 1.0s ease;
+      z-index: 1;
+    }
+    .button-wrapper button {
+	  font-size:x-large;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: url('afbeeldingen/graniet.jpg') center/cover no-repeat;
+      cursor: pointer;
+      transition: transform 1.5s ease;
+      z-index: 2;
+    }
+	.button-wrapper button:hover:not(.active) {
+	  transform: translateX(30%);
+	}
+	.button-wrapper button.active {
+	  transform: translateX(10%);
+	}
+    .button-wrapper button.active + .hole,
+    .button-wrapper button:hover:not(.active) + .hole {
+      background-color: black;
+    }
+    .main {
+      flex: 74%;
+      background: #fafafa;
+      padding: 1rem;
+      min-height: 300px;
+      position: relative;
+    }
+    footer {
+      background-color: rgba(204,204,204,1);
+      text-align: right;
+      padding: 0.5rem 10px;
+      flex-shrink: 0;
+    }
+    footer h4 {
+      font-family: Georgia, "Times New Roman", Times, serif;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      nav .menu {
+        display: none;
+        flex-direction: column;
+        background: #444;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+      nav .menu.active {
+        display: flex;
+      }
+      .container {
+        flex-direction: column;
+      }
+      .sidebar, .main {
+        flex:100%;
+        height: auto;
+      }
+      .button-wrapper {
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="afbeeldingen\logo.png" alt="Mijn Site Logo">
+      </div>
+      <div class="hamburger">&#9776;</div>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div id="wall-overlay" style="
+    position: fixed;
+    top:0; left:0;
+    width: 100%; height: 100%;
+    display: flex;
+    z-index: 9999;
+    cursor: url('afbeeldingen/Wand.png'), auto;
+  ">
+    <div id="wall-left" style="
+      flex: 1;
+      background: url('afbeeldingen/wall-left.jpg') center/cover no-repeat;
+      transition: transform 2s ease;
+    "></div>
+    <div id="wall-right" style="
+      flex: 1;
+      background: url('afbeeldingen/wall-right.jpg') center/cover no-repeat;
+      transition: transform 2s ease;
+    "></div>
+  </div>
+  <div class="container">
+    <aside class="sidebar">
+      <h1 align="center">Sidebar</h1>
+
+      <div class="button-wrapper">
+        <button data-id="1"><span>Knop 1</span></button>
+        <div class="hole"></div>
+      </div>
+      <div class="button-wrapper">
+        <button data-id="2"><span>Knop 2</span></button>
+        <div class="hole"></div>
+      </div>
+      <div class="button-wrapper">
+        <button data-id="3"><span>Knop 3</span></button>
+        <div class="hole"></div>
+      </div>
+      <div class="button-wrapper">
+        <button data-id="4"><span>Knop 4</span></button>
+        <div class="hole"></div>
+      </div>
+      <div class="button-wrapper">
+        <button data-id="5"><span>Knop 5</span></button>
+        <div class="hole"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="main-initial">
+        <img src="afbeeldingen\start.png" alt="Startbeeld" style="width:100%; height:auto;">
+      </div>
+      <div class="content" data-id="1" style="display:none;">
+        <h1>Content 1</h1>
+        <p>Dit is de eerste content sectie.</p>
+      </div>
+      <div class="content" data-id="2" style="display:none;">
+        <h1>Content 2</h1>
+        <p>Dit is de tweede content sectie.</p>
+      </div>
+      <div class="content" data-id="3" style="display:none;">
+        <h1>Content 3</h1>
+        <p>Dit is de derde content sectie.</p>
+      </div>
+      <div class="content" data-id="4" style="display:none;">
+        <h1>Content 4</h1>
+        <p>Dit is de vierde content sectie.</p>
+      </div>
+      <div class="content" data-id="5" style="display:none;">
+        <h1>Content 5</h1>
+        <p>Dit is de vijfde content sectie.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <h4><b>© All right reserved<br/>Van den Bogert 2025</b></h4>
+  </footer>
+
+  <audio id="hoverSound" src="audio\stoneslide.mp3"></audio>
+  <audio id="clickSound" src="audio\stoneslidereverse.mp3"></audio>
+
+  <script>
+  $(document).ready(function() {
+    $(".hamburger").click(function() {
+      $(".menu").toggleClass("active");
+    });
+  
+	$(".sidebar button").hover(function() {
+	  if (!$(this).hasClass("active")) {   // alleen afspelen als NIET actief
+		var hoverSound = $("#hoverSound")[0];
+		hoverSound.currentTime = 0;
+		hoverSound.play();
+	  }
+	});
+
+	$(".sidebar button").click(function() {
+	  var id = $(this).data("id");
+	  var $next = $(".main .content[data-id='" + id + "']");
+	
+	  // Speel click geluid
+	  $("#clickSound")[0].currentTime = 0;
+	  $("#clickSound")[0].play();
+	
+	  $(".main .main-initial").fadeOut(300);
+
+	  $(".main .content").fadeOut(0); 
+	  $next.fadeIn(300);
+
+	  $(".sidebar button").removeClass("active");
+	  $(this).addClass("active");
+	});
+
+    $("#wall-overlay").click(function() {
+      $("#wall-left").css("transform","translateX(-100%)");
+      $("#wall-right").css("transform","translateX(100%)");
+
+      $("#clickSound")[0].currentTime = 0;
+      $("#clickSound")[0].play();
+
+      setTimeout(function() {
+        $("#wall-overlay").fadeOut(300);
+      }, 2500);
+    });
+  });
+  </script>
+</body>
+</html>
