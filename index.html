@@ -498,7 +498,11 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   <audio id="clickSound" src="audio\stoneslidereverse.mp3"></audio>
   <audio id="scream1" src="audio\scream1.wav" preload="auto"></audio>
   <audio id="scream2" src="audio\scream2.mp3" preload="auto"></audio>
-  <audio id="ambientSound" src="audio/ambient.mp3" preload="auto"></audio>
+  <audio id="scream3" src="audio\scream3.mp3" preload="auto"></audio>
+  <audio id="scream4" src="audio\scream4.mp3" preload="auto"></audio>
+  <audio id="scream5" src="audio\scream5.mp3" preload="auto"></audio>  
+  <audio id="ambientSound" src="audio/ambient1.mp3" preload="auto"></audio>
+  <audio id="ambientSound2" src="audio/ambient2.mp3" preload="auto"></audio>
   <audio id="thunderSound" src="audio/thunder.mp3" preload="auto"></audio>
   <audio id="wallCloseSound" src="audio/closing.wav" preload="auto"></audio>
   <audio id="heartbeat" src="audio/heartbeat.mp3"></audio>
@@ -507,7 +511,29 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   <div id="page-flash"></div>
   <div id="thunder-overlay"></div>
 
-  <script>
+<script>
+  function typeWriterEffect(element, html, speed = 75) {
+	element.innerHTML = "";
+	let i = 0;
+  
+	function typing() {
+	  if (i < html.length) {
+		if (html.substr(i, 4) === "<br>") {
+		  element.innerHTML += "<br>";
+		  i += 4;
+		} else if (html.substr(i, 5) === "<br/>") {
+		  element.innerHTML += "<br/>";
+		  i += 5;
+		} else {
+		  element.innerHTML += html.charAt(i);
+		  i++;
+		}
+		setTimeout(typing, speed);
+	  }
+	}
+	typing();
+  }
+
   function flashColorsSimple(colors, interval = 150) {
     const $flash = $("#magic-flash");
     let i = 0;
@@ -530,17 +556,17 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   function thunderFlash() {
     const overlay = document.getElementById("thunder-overlay");
     const thunder = document.getElementById("thunderSound");
-    const time = Math.random() * 7000 + 8000;
+    const time = Math.random() * 13000 + 12000;
   
-    setTimeout(() => {
+    thunderTimeoutId = setTimeout(() => {
       let flashes = 3;
       let flashIndex = 0;
   
-      const flashInterval = setInterval(() => {
+      thunderIntervalId = setInterval(() => {
         overlay.style.backgroundColor = (flashIndex % 2 === 0) ? "rgba(255,255,255,0.8)" : "transparent";
         flashIndex++;
         if (flashIndex >= flashes * 2) {
-          clearInterval(flashInterval);
+          clearInterval(thunderIntervalId);
           thunder.currentTime = 0;
           thunder.play().catch(err => console.warn("Kon donder niet starten:", err));
           thunderFlash();
@@ -550,13 +576,16 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   }
   
   function stopThunderFlash() {
-	clearTimeout(thunderTimeoutId);
-	clearInterval(thunderIntervalId);
+    clearTimeout(thunderTimeoutId);
+    clearInterval(thunderIntervalId);
   }
   
   const screams = [
     document.getElementById("scream1"),
-    document.getElementById("scream2")
+    document.getElementById("scream2"),
+	document.getElementById("scream3"),
+	document.getElementById("scream4"),
+	document.getElementById("scream5")
   ];
   let screamInterval = null;
   
@@ -584,13 +613,19 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   }
   
   function startAmbientLoop() {
-    const ambient = document.getElementById("ambientSound");
-    ambient.loop = true;
-    ambient.currentTime = 0;
-    ambient.play().catch(err => {
-      console.warn("Kon ambient niet starten:", err);
-    });
-  }
+	const ambient1 = document.getElementById("ambientSound");
+	const ambient2 = document.getElementById("ambientSound2");
+  
+	[ambient1, ambient2].forEach((sound, index) => {
+	  if (sound) {
+		sound.loop = true;
+		sound.currentTime = 0;
+		sound.play().catch(err => {
+		  console.warn(`Kon ambient${index + 1} niet starten:`, err);
+		});
+	  }
+	});
+}
   
   $(document).ready(function () {
     $(".main, .main-initial").css("position", "relative");
@@ -619,13 +654,19 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   
           $(".main .main-initial").fadeOut(300);
           $(".main .content").fadeOut(0);
-          $(".main .content[data-id='" + id + "']").fadeIn(300, function() {
-            if (id === 5) {
-              $("#next-section").fadeOut(400);
-              setTimeout(jumpscareContent5, 23000);
-			  startHeartbeatAfterDelay(9000);
-            }
-          });
+		  $(".main .content[data-id='" + id + "']").fadeIn(300, function() {
+			const texts = this.querySelectorAll("p");
+			texts.forEach(el => {
+			  const html = el.innerHTML; // originele HTML mét <br>
+			  typeWriterEffect(el, html, 35);
+			});
+		  
+			if (id === 5) {
+			  $("#next-section").fadeOut(400);
+			  setTimeout(jumpscareContent5, 30000);
+			  startHeartbeatAfterDelay(14000);
+			}
+		  });
         });
       });
     }
@@ -644,7 +685,7 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
       startScreams();
       startAmbientLoop();
       wallCloseEffect();
-	  thunderFlash();
+      thunderFlash();
     }
   
     if (!sessionStorage.getItem("wallShown")) {
@@ -681,65 +722,65 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
         $("#start-button").fadeIn(400).off("click").on("click", startExperience);
     }
   
-	function wallCloseEffect() {
-	  const mainInitial = $(".main-initial");
-	  const dungeonText = $(".dungeon-text");
-	  const sound = $("#wallCloseSound")[0];
-	
-	  setTimeout(() => {
-		sound.currentTime = 0;
-		sound.play().catch(err => console.warn("Kon wall close sound niet afspelen:", err));
-	
-		dungeonText.animate({opacity: 0}, 2000);
+    function wallCloseEffect() {
+      const mainInitial = $(".main-initial");
+      const dungeonText = $(".dungeon-text");
+      const sound = $("#wallCloseSound")[0];
+    
+      setTimeout(() => {
+        sound.currentTime = 0;
+        sound.play().catch(err => console.warn("Kon wall close sound niet afspelen:", err));
+    
+        dungeonText.animate({opacity: 0}, 2000);
 
-		const overlay = $("<div></div>").css({
-		  position: "absolute",
-		  top: 0,
-		  left: 0,
-		  width: "100%",
-		  height: "100%",
-		  backgroundImage: "url('afbeeldingen/stairwell.jpg')",
-		  backgroundSize: "cover",
-		  backgroundPosition: "center",
-		  backgroundRepeat: "no-repeat",
-		  opacity: 0,
-		  zIndex: 5
-		}).appendTo(mainInitial);
+        const overlay = $("<div></div>").css({
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url('afbeeldingen/stairwell.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          opacity: 0,
+          zIndex: 5
+        }).appendTo(mainInitial);
 
-		const overlayText = $("<div>Met binnengaan valt de muur weer achter je dicht!</br>Je kunt alleen maar verder naar binnen!</div>").css({
-		  position: "absolute",
-		  top: "5%",         
-		  left: "5%",
-		  color: "#db3807",
-		  fontSize: "2rem",
-		  fontWeight: "bold",
-		  textShadow: "2px 2px 8px rgba(0,0,0,0.7)",
-		  opacity: 0,          
-		  zIndex: 6
-		}).appendTo(mainInitial);
+        const overlayText = $("<div>Met binnengaan valt de muur weer achter je dicht!</br>Je kunt alleen maar verder naar binnen!</div>").css({
+          position: "absolute",
+          top: "5%",         
+          left: "5%",
+          color: "#db3807",
+          fontSize: "2rem",
+          fontWeight: "bold",
+          textShadow: "2px 2px 8px rgba(0,0,0,0.7)",
+          opacity: 0,          
+          zIndex: 6
+        }).appendTo(mainInitial);
 
-		overlay.animate({opacity: 1}, 2000);
-		overlayText.animate({opacity: 1}, 2000, () => {
-		  mainInitial.css("background-image", "url('afbeeldingen/stairwell.jpg')");
-		  overlay.remove();
+        overlay.animate({opacity: 1}, 2000);
+        overlayText.animate({opacity: 1}, 2000, () => {
+          mainInitial.css("background-image", "url('afbeeldingen/stairwell.jpg')");
+          overlay.remove();
+          
+          $("body").css("background", "black");
+    
+          $("#next-section").fadeIn(800);
+        });
+      }, 8000);
+    }
 
-		  $("body").css("background", "black");
-	
-		  $("#next-section").fadeIn(800);
-		});
-	  }, 8000);
-	}
-
-	function startHeartbeatAfterDelay(delay = 9000) {
-		const heartbeatAudio = document.getElementById("heartbeat");
-		setTimeout(() => {
-			if (heartbeatAudio) {
-				heartbeatAudio.currentTime = 0;
-				heartbeatAudio.volume = 1.0; // maximaal 100% volume
-				heartbeatAudio.play().catch(err => console.warn("Heartbeat kon niet starten:", err));
-			}
-		}, delay);
-	}
+    function startHeartbeatAfterDelay(delay = 9000) {
+      const heartbeatAudio = document.getElementById("heartbeat");
+      setTimeout(() => {
+        if (heartbeatAudio) {
+          heartbeatAudio.currentTime = 0;
+          heartbeatAudio.volume = 1.0;
+          heartbeatAudio.play().catch(err => console.warn("Heartbeat kon niet starten:", err));
+        }
+      }, delay);
+    }
   
     function jumpscareContent5() {
       const content5 = document.querySelector(".content[data-id='5']");
@@ -822,6 +863,3 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   </script>
 </body>
 </html>
-
-
-
