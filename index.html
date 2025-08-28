@@ -653,13 +653,17 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
           clickSound.play();
   
           $(".main .main-initial").fadeOut(300);
-          $(".main .content").fadeOut(0);
-		  $(".main .content[data-id='" + id + "']").fadeIn(300, function() {
-			const texts = this.querySelectorAll("p");
-			texts.forEach(el => {
-			  const html = el.innerHTML; // originele HTML mét <br>
-			  typeWriterEffect(el, html, 35);
-			});
+		  $(".main .content").fadeOut(0);
+		  const $currentContent = $(".main .content[data-id='" + id + "']");
+		  $currentContent.find("p").each((_, el) => {
+			  el.dataset.original = el.innerHTML; // originele tekst bewaren
+			  el.innerHTML = "";                   // eerst leegmaken
+		  });
+		  $currentContent.fadeIn(300, function() {
+			  const texts = this.querySelectorAll("p");
+			  texts.forEach(el => {
+				  typeWriterEffect(el, el.dataset.original, 35);
+			  });
 		  
 			if (id === 5) {
 			  $("#next-section").fadeOut(400);
