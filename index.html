@@ -512,7 +512,7 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
   <div id="thunder-overlay"></div>
 
 <script>
-  function typeWriterEffect(element, html, speed = 75) {
+  function typeWriterEffect(element, html, speed = 10) {
 	element.innerHTML = "";
 	let i = 0;
   
@@ -656,18 +656,18 @@ Dan merk je dat de muren pulseren, langzaam, als een gigantisch hart dat klopt i
 		  $(".main .content").fadeOut(0);
 		  const $currentContent = $(".main .content[data-id='" + id + "']");
 		  $currentContent.find("p").each((_, el) => {
-			  el.dataset.original = el.innerHTML; // originele tekst bewaren
-			  el.innerHTML = "";                   // eerst leegmaken
+			  el.dataset.original = el.innerHTML;
+			  el.innerHTML = "";                  
 		  });
 		  $currentContent.fadeIn(300, function() {
 			  const texts = this.querySelectorAll("p");
 			  texts.forEach(el => {
-				  typeWriterEffect(el, el.dataset.original, 35);
+				  typeWriterEffect(el, el.dataset.original, 20);
 			  });
 		  
 			if (id === 5) {
 			  $("#next-section").fadeOut(400);
-			  setTimeout(jumpscareContent5, 30000);
+			  setTimeout(jumpscareContent5, 27000);
 			  startHeartbeatAfterDelay(14000);
 			}
 		  });
