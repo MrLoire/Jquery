@@ -1138,10 +1138,10 @@ En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
 	  $("#start-experience").on("click", function(){
 		$("#intro-screen").fadeOut(1000, function(){
 		  // Video uitgeschakeld: direct doen alsof hij is afgespeeld
-		  //$("#intro-video").show()[0].play();  //<-- deze regel even weglaten
+		  $("#intro-video").show()[0].play();  //<-- deze regel even weglaten
 	
 		  // Simuleer dat de video klaar is
-		  $("#intro-video").trigger("ended");
+		  //$("#intro-video").trigger("ended");
 		});
 	  });
 	
@@ -1165,3 +1165,4 @@ En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
   </script>
 </body>
 </html>
+
