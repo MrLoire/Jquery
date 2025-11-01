@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+          crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"
+          integrity="sha256-9zljDKpE/mQxmaR4V2cGVaQ7arF3CcXxarvgr7Sj8Uc="
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 0.1rem;
+    }
+    nav {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	}
+	nav .menu {
+	  display: flex;
+	  gap: 1rem;
+	  list-style: none;
+	  margin: 0;
+	  margin-right: 1%;
+	  padding: 0;
+	}
+	nav .menu li a {
+	  color: white;
+	  text-decoration: none;
+	  font-weight: bold;
+	  padding: 0.25rem 0.5rem;      
+	  border-radius: 5px;           
+	  transition: background-color 0.3s, color 0.3s;
+	}
+	nav .menu li a:hover {
+	  background-color: rgba(255, 255, 255, 0.2);
+	}
+	nav .menu li a.active {
+	  color: #ffcc00;             
+	  background-color: rgba(0, 0, 0, 0.3);
+	}
+	.logo img {
+	  max-height: 50px;
+	  height: auto;
+	  width: auto;
+	}
+	.hamburger {
+	  display: none;
+	  font-size: 1.8rem;
+	  cursor: pointer;
+	  user-select: none;
+	}
+	main {
+	  min-height: 100vh;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  background-image: url('afbeeldingen/contact.jpg');
+	  background-position: center;
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  padding: 2rem;
+	  box-sizing: border-box;
+	}
+	.form-container {
+	  position: relative;             
+	  padding: 3rem 4rem;
+	  border-radius: 10px;
+	  max-width: 600px;
+	  width: 100%;
+	  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+	  overflow: hidden;
+	}
+	.form-container::before {
+	  content: '';
+	  position: absolute;
+	  top: -20%;     
+	  left: -20%;
+	  width: 140%;                 
+	  height: 140%;
+	  background-image: url('afbeeldingen/form.png');
+	  background-position: center;
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  z-index: 0;                     
+	  border-radius: 10px;          
+	}
+	.form-container form {
+	  position: relative;
+	  z-index: 1;
+	}
+	form h2 {
+	  color: rgba(204,204,204,1);
+	  text-align: center;
+	  margin-bottom: 1.5rem;
+	}
+	form label {
+	  display: block;
+	  margin-top: 1rem;
+	  color:rgba(204,204,204,1);
+	  font-weight: bold;
+	}
+	form textarea {
+	  width: 100%;
+	  padding: 0.5rem;
+	  margin-top: 0.3rem;
+	  border-radius: 5px;
+	  border: 1px solid #ccc;
+	  resize: vertical;
+	  font-family: Arial, sans-serif;
+	}
+	#sendButton {
+	  display: block;
+	  width: 100%;
+	  margin-top: 1.5rem;
+	  padding: 0.75rem;
+	  background-color: #666;
+	  color: white;
+	  font-size: 1rem;
+	  border: none;
+	  border-radius: 5px;
+	  cursor: pointer;
+	  transition: background-color 0.3s ease;
+	}
+	#sendButton:hover {
+	  background-color: #555;
+	}
+    footer {
+      background-color: rgba(204,204,204,1);
+      text-align: right;
+      padding: 0.5rem 10px;
+      flex-shrink: 0;
+    }
+    footer h4 {
+      font-family: Georgia, "Times New Roman", Times, serif;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      nav .menu {
+        display: none;
+        flex-direction: column;
+        background: #444;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+      nav .menu.active {
+        display: flex;
+      }
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="afbeeldingen\logo.png" alt="Mijn Site Logo">
+      </div>
+      <div class="hamburger">&#9776;</div>
+      <ul class="menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <form action="https://formspree.io/f/xbjbrzgg" method="POST">
+        <h2>Contactformulier</h2>
+  
+        <label for="fname">Voornaam</label>
+        <textarea id="fname" name="fname" rows="1" placeholder="...Voornaam..." required></textarea>
+  
+        <label for="lname">Achternaam</label>
+        <textarea id="lname" name="lname" rows="1" placeholder="...Achternaam..." required></textarea>
+  
+        <label for="sendemail">E-mail adres</label>
+        <textarea id="sendemail" name="sendemail" rows="1" placeholder="...E-mail adres..." required></textarea>
+  
+        <label for="vraag">Bericht</label>
+        <textarea id="vraag" name="vraag" rows="5" placeholder="...vragen of opmerkingen..." required></textarea>
+  
+        <input id="sendButton" type="submit" value="Versturen">
+  
+        <input type="hidden" name="_redirect" value="https://mrloire.github.io/MijnSite/index.html">
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <h4><b>© All rights reserved<br/>Van den Bogert 2025</b></h4>
+  </footer>
+</body>
+</html>
