@@ -1,0 +1,1161 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Index</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"
+          integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+          crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+	  background-color: rgba(0,0,0,1);
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #333;
+      color: white;
+      padding: 0.1rem;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .menu {
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      margin: 0;
+      margin-right: 1%;
+      padding: 0;
+    }
+    nav .menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.25rem 0.5rem;  
+      border-radius: 5px;       
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav .menu li a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    nav .menu li a.active {
+      color: #ffcc00;              
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    .logo img {
+      max-height: 50px;
+      height: auto;
+      width: auto;
+    }
+    .container {
+      display: flex;
+      gap: 2%;
+      margin: 1%;
+      flex: 1 0 auto;
+    }
+    .sidebar {
+      flex: 24%;
+      background-image: url('afbeeldingen/graniet.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1%;
+      position: relative;
+      overflow: visible;
+    }
+    .button-wrapper {
+      position: relative;
+      height: 18%;
+    }
+    .button-wrapper .hole {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      transition: background-color 1.0s ease;
+      z-index: 1;
+    }
+    .button-wrapper button {
+      font-size:x-large;
+      font-weight:bold;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-image: url('afbeeldingen/graniet.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: transform 1.5s ease;
+      z-index: 2;
+    }
+    .button-wrapper button:hover:not(.active) {
+      transform: translateX(30%);
+    }
+    .button-wrapper button.active {
+      transform: translateX(10%);
+    }
+    .button-wrapper button.active + .hole,
+    .button-wrapper button:hover:not(.active) + .hole {
+      background-color: black;
+    }
+    .main {
+      flex: 74%;
+      padding: 0.5rem;
+      min-height: 300px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow:hidden;
+    }
+    footer {
+      background-color: rgba(204,204,204,1);
+      text-align: right;
+      padding: 0.5rem 10px;
+      flex-shrink: 0;
+    }
+    footer h4 {
+      font-family: Georgia, "Times New Roman", Times, serif;
+      margin: 0;
+    }
+    p {
+      font-size:large;
+    }
+	.content[data-id="5"] p {
+	  position: relative;
+	  z-index: 2;
+	}
+    .main-initial {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background-color: rgba(0,0,0,0.1);
+      padding-right: 10%;
+      box-sizing: border-box;
+      overflow: hidden;
+      position: relative;
+      background-position:center;
+      background-size:cover;
+      background-repeat:no-repeat;
+    }
+    .dungeon-text {
+      font-size: 6rem;
+      color: #bd0d0d;
+      font-family: 'Creepster', cursive;
+      position: relative;
+      display: inline-block;
+      line-height: 1.1;
+      text-align: center;
+      z-index: 2;
+      animation: bleed-shadow 2s infinite alternate, bleed-shake 1s infinite alternate;
+      padding-bottom: 30px;
+    }
+
+    @keyframes bleed-shadow {
+      0% { text-shadow: 2px 2px 0 #000, 4px 4px 6px #550000, 6px 6px 10px #330000; }
+      100% { text-shadow: 2px 2px 0 #000, 6px 6px 12px #ff0000, 10px 10px 20px #550000, 14px 14px 30px #330000; }
+    }
+    @keyframes bleed-shake {
+      0% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-2px) rotate(-1deg); }
+      50% { transform: translateY(2px) rotate(1deg); }
+      75% { transform: translateY(-2px) rotate(-1deg); }
+      100% { transform: translateY(2px) rotate(1deg); }
+    }
+    .drip {
+      position: absolute;
+      border-radius: 50% 50% 60% 60% / 50% 50% 60% 60%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,80,80,1), #6b0000 80%);
+      pointer-events: none;
+      z-index: 1;
+    }
+	.content {
+	  position: relative;
+	  flex: 1;
+	  display: none;
+	  padding: 2rem;
+	  color: white;
+	  min-height: 400px;
+	  background-position: center;
+	  background-size: cover;
+	  background-repeat: no-repeat;
+	  filter: brightness(1);
+	}
+	.content[data-id="2"] { 
+	  background-image: url('afbeeldingen/content2.png');
+	  position: relative;
+	  overflow: hidden;
+	}
+	.content[data-id="3"] {
+	  background-image: url('afbeeldingen/content2a.png');
+	  position: relative;
+	  overflow: hidden;
+	}
+	.content[data-id="4"] {
+	  background-image: url('afbeeldingen/content2b.png');
+	  position: relative;
+	  overflow: hidden;
+  	  filter: brightness(1.6);
+	  background-position:center 92%;
+    }
+	
+	@keyframes candleFlicker {
+	  0%   { filter: brightness(1.5); }   
+	  15%  { filter: brightness(2.5); }   
+	  30%  { filter: brightness(1.75); }  
+	  50%  { filter: brightness(2.75); } 
+	  70%  { filter: brightness(1.625); }
+	  85%  { filter: brightness(2.375); }
+	  100% { filter: brightness(1.875); }
+	}
+	
+	.flicker-active {
+	  animation: candleFlicker 5s infinite;
+	}
+	
+	@keyframes eyeAdjust {
+	  0%   { filter: brightness(0); }
+	  60%  { filter: brightness(0.5); }
+	  100% { filter: brightness(1.5); }
+	}
+	
+	.eye-adjust {
+	  animation: eyeAdjust 4s forwards ease-out;
+	}
+	.content.flash-bg { animation: flashDim 4s ease forwards; }
+		
+	@keyframes flashDim {
+	  0%   { filter: brightness(6); }    
+	  25%  { filter: brightness(4); }    
+	  70%  { filter: brightness(2.4); } 
+	  100% { filter: brightness(2); }
+	}
+	
+	.candle-wrapper { 
+	  position: absolute; 
+	  transform: translate(-50%, -50%); 
+	} 
+	.candle, .candle-flame { 
+	  position: absolute; 
+	  left: 50%; 
+	  top: 50%; 
+	  transform: translate(-50%, -50%); 
+	} 
+	.candle { 
+	  width: 100%; 
+	  height: 100%; 
+	  background: radial-gradient(circle, rgba(255, 200, 100, 0.4) 0%, rgba(255, 150, 50, 0) 80%); 
+	  border-radius: 50%; 
+	  pointer-events: none; 
+	  mix-blend-mode: screen; 
+	  z-index: 2; 
+	}
+	
+	@keyframes flicker { 
+	  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; } 
+	  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; } 
+	  100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; } 
+	} 
+	
+	.candle-flame { 
+	  width: 30%; 
+	  height: 70%; 
+	  background: radial-gradient(ellipse at center, rgba(255,200,100,0.7) 0%, rgba(255,150,50,0) 70%); 
+	  border-radius: 50% / 50%; 
+	  mix-blend-mode: screen; 
+	  pointer-events: none; 
+	  z-index: 3; 
+	} 
+	
+	@keyframes candle-flicker-1 {
+	  0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.6; }
+	  30%  { transform: translate(-50%, -50%) scale(1.15); opacity: 0.9; }
+	  60%  { transform: translate(-50%, -50%) scale(0.9);  opacity: 0.65; }
+	  100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.6; }
+	}
+	
+	@keyframes candle-flicker-2 {
+	  0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.7; }
+	  25%  { transform: translate(-50%, -50%) scale(1.05); opacity: 0.8; }
+	  55%  { transform: translate(-50%, -50%) scale(1.2);  opacity: 0.95; }
+	  100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.7; }
+	}
+	
+	@keyframes candle-flicker-3 {
+	  0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.65; }
+	  20%  { transform: translate(-50%, -50%) scale(0.95); opacity: 0.75; }
+	  70%  { transform: translate(-50%, -50%) scale(1.1);  opacity: 0.9; }
+	  100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.65; }
+	}
+
+	.content[data-id="4"].flicker-strong {
+	  animation: candleFlickerStrong 2.5s infinite ease-in-out;
+	}
+	.content[data-id="4"].flicker-medium {
+	  animation: candleFlickerMedium 2.5s infinite ease-in-out;
+	}
+	.content[data-id="4"].flicker-weak {
+	  animation: candleFlickerWeak 2.5s infinite ease-in-out;
+	}
+	
+	@keyframes candleFlickerStrong {
+	  0%   { filter: brightness(1.8); }
+	  50%  { filter: brightness(2.4); }
+	  100% { filter: brightness(1.8); }
+	}
+	
+	@keyframes candleFlickerMedium {
+	  0%   { filter: brightness(1.65); }
+	  50%  { filter: brightness(2.025); }
+	  100% { filter: brightness(1.65); }
+	}
+	
+	@keyframes candleFlickerWeak {
+	  0%   { filter: brightness(1.5); }
+	  50%  { filter: brightness(1.725); }
+	  100% { filter: brightness(1.5); }
+	}
+	
+	.image-slide-container {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  overflow: hidden;
+	  z-index: 1;  
+	}
+	.image-slide {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background-size: cover;
+	  background-position: center bottom;
+	  background-repeat: no-repeat;
+	  opacity: 0;
+	  transform: translateX(0);
+	  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+	}
+	.image-slide.active {
+	  opacity: 1;
+	  transform: translateX(0);
+	  z-index: 2;
+	}
+	.image-slide.start-left {
+	  transform: translateX(-100%);
+	  opacity: 1;
+	  z-index: 3;
+	}
+	.image-slide.slide-out-right {
+	  transform: translateX(100%);
+	  opacity: 0;
+	  z-index: 1;
+	}
+    #intro-screen {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: url('afbeeldingen/intro.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+	#intro-screen button {
+	  padding: 1rem 2rem;
+	  font-size: 2rem;
+	  font-weight: bold;
+	  border: none;
+	  border-radius: 10px;
+	  background: url("afbeeldingen/graniet.jpg") no-repeat center center;
+	  background-size: cover;
+	  border: outset;
+	  color: white;
+	  cursor: pointer;
+	  transition: 0.3s;
+	}
+	#intro-screen button:hover {
+	  opacity: 0.85;
+	}
+    #intro-video {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      z-index: 9999;
+      display: none;
+    }
+  header, .container, footer {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1s ease;
+  }
+  </style>
+</head>
+<body>
+  <div id="intro-screen">
+    <button id="start-experience">Start Experience</button>
+  </div>
+
+  <video id="intro-video" playsinline>
+    <source src="video/intro.mp4" type="video/mp4">
+    Je browser ondersteunt geen video.
+  </video>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="afbeeldingen/logo.png" alt="Mijn Site Logo">
+      </div>
+      <ul class="menu">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h1 align="center">Zijmuur</h1>
+      <div class="button-wrapper"><button data-id="1">De Ingang</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="2">Pijnlijke gang</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="3">De Echo's</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="4">De Martelkamer</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="5">Het Hart Van De Duisternis</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="6">Welkom thuis...</button><div class="hole"></div></div>
+    </aside>
+
+    <main class="main">
+      <div class="main-initial">
+        <h1 class="dungeon-text">Welcome to the dungeon</h1>
+      </div>
+      <div class="content" data-id="1">
+        <p>Je hoort jezelf hijgen van spanning. Ook al voelt het alsof je je adem inhoudt. Je hart bonst als een gek in je borstkas, alsof het wil ontsnappen uit deze ruimte, zonder jouw lichaam mee te nemen. Even word je overvallen door een gevoel van paniek.<br><br>Het is pikdonker in de ruimte. Je knijpt je ogen tot spleetjes om iets te kunnen zien, terwijl je je best doet om je angst weg te drukken.<br><br>Dan ineens bedenk je dat je aansteker in je broekzak zit. Snel pak je hem uit je zak en met trillende handen klik je hem aan.<br><br>De kleine vlam zorgt ervoor dat je iets kunt zien. Maar wat je ziet, stelt je niet gerust.</p>
+      </div>
+      
+      <div class="content" data-id="2">
+        <p>Je staat in een soort kleine kamer. De muren zijn, net als de buitenmuur, van ruw gesteente en de vloer is bedekt met grote gladde stenen. Het is koud en de klamme lucht ruikt bedompt.<br><br>Voor je is een smalle gang. Voorzichtig schuifel je er naartoe. Je schoenen maken het extra glad en je glijdt bijna uit.<br><br>Je probeert houvast te zoeken tegen de wand, maar de stenen op de wand zijn scherp en trekken diepe sneden in je handpalm. Er ontsnapt een vloek uit je mond. Damn, dat doet zeer.<br><br>Er zit niets anders op dan je schoenen en<br> sokken uit te trekken om zo meer grip<br>te hebben tijdens het lopen.<br><br>De vloer is koud aan je voeten.<br>Weer zet je een paar voorzichtige<br>stappen. Dan ineens, vanuit het niets,<br>gaan er kaarsen branden in de gang.</p>
+      </div>
+      
+      <div class="content" data-id="3">
+        <p>De vlammen van de kaarsen geven een spookachtige gloed in de gang. Je haalt even diep adem en schuifelt dan langzaam dichter naar de gang.<br><br>De gang is laag. Je moet bukken om je hoofd niet te stoten. Ook moet je je lichaam iets draaien om de scherpe wanden niet te raken.<br><br>De gang lijkt eindeloos. Terwijl je jezelf tussen de scherpe stenen manoeuvreert, flakkeren de kaarsen alsof ze reageren op je aanwezigheid.<br><br>Je voeten voelen de kou van de vloer doordringen tot in je botten. Iedere stap maakt een zacht plofje, weerkaatsend door de nauwe doorgang, alsof de ruimte jouw aanwezigheid probeert na te bootsen.<br>Dan… stilte.</p>
+      </div>
+      
+      <div class="content" data-id="4">
+        <p>Geen regendruppels, geen wind, zelfs geen echo meer van je ademhaling. Je stopt. Houdt je adem in. De stilte is te stil. Alsof zelfs het geluid bang is geworden.
+Je probeert je te focussen, je gedachten bij elkaar te houden. Het is gewoon een oude gang. Niets meer. Je verbeeldt je dit. Toch trekt de kloppende pijn van de wond in je hand door je lijf. Wat je er aan herinnert dat je lichaam hier kwetsbaar en echt is.<br><br>Plotseling dooft de eerste kaars. Dan de tweede.<br>Eén voor één vallen ze uit, alsof een onzichtbare hand het vuur smoort.<br>De duisternis kruipt dichterbij. Je hart bonst.<br>Je kijkt naar de muur links van je en pas dan zie je ze: krassen.<br>Tientallen krassen, dwars door het steen, als nagelstrepen.<br>Alsof iemand wanhopig geprobeerd heeft een weg naar buiten te krabben.<br>Je mond is droog. Je slikt moeizaam.<br>De laatste kaars flakkert. En dooft uit.<br><br>Pikdonker.</p>
+      </div>
+      
+      <div class="content" data-id="5">
+        <p>Je voelt je adem schokken. Er beweegt iets achter je.<br>Een heel zacht schrapend geluid, alsof er iets over steen kruipt.<br>Je draait je bliksem snel om, maar er is niets te zien.<br>Je hand zoekt weer naar je aansteker.<br>Met trillende vingers klik je hem aan.<br><br>De vlam springt op.<br><br>Recht voor je, nog geen meter van je af, staat iemand.<br>Een lange gestalte met een grauwe bleke huid.<br>Zijn ogen zijn zwart. Hij beweegt niet en hij kijkt dwars door je heen.<br>
+Je verstijft. De vlam van de aansteker flikkert.</p>
+      </div>
+      
+       <div class="content" data-id="6">
+        <p>Je voelt hoe een koude hand je pols vastgrijpt.<br><br>Hard en onmenselijk sterk.<br><br>
+En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
+      </div>           
+    </main>
+  </div>
+
+  <footer>
+    <h4><b>© All rights reserved<br/>Van den Bogert 2025</b></h4>
+  </footer>
+
+  <audio id="hoverSound" src="audio\stoneslide.mp3"></audio>
+  <audio id="clickSound" src="audio\stoneslidereverse.mp3"></audio>
+  <audio id="scream1" src="audio\scream1.wav" preload="auto"></audio>
+  <audio id="scream2" src="audio\scream2.mp3" preload="auto"></audio>
+  <audio id="ambientSound" src="audio/ambient1.mp3" preload="auto"></audio>
+  <audio id="ambientSound2" src="audio/ambient2.mp3" preload="auto"></audio>
+  <audio id="ambientSound3" src="audio\ambient3.mp3" preload="auto"></audio>
+  <audio id="ambientSound4" src="audio\ambient4.mp3" preload="auto"></audio>
+  <audio id="ambientSound5" src="audio\ambient5.mp3" preload="auto"></audio> 
+  <audio id="thunderSound" src="audio/thunder.mp3" preload="auto"></audio>
+  <audio id="wallCloseSound" src="audio/closing.wav" preload="auto"></audio>
+  <audio id="heartbeat" src="audio/heartbeat.mp3"></audio>
+  <audio id="lighter" src="audio/lighter.mp3"></audio>
+  
+
+<script>
+  const h1 = document.querySelector(".dungeon-text");
+  if (h1) {
+	const main = document.querySelector("main") || document.body;
+	const mainBottom = Math.min(main.offsetHeight + main.offsetTop, window.innerHeight);
+  
+	function isVisible(el) {
+	  const rect = el.getBoundingClientRect();
+	  return rect.bottom > 0 && rect.top < window.innerHeight;
+	}
+  
+	function spawnDrip() {
+	  if (!document.body.contains(h1) || !isVisible(h1)) return;
+  
+	  const rects = Array.from(h1.getClientRects());
+	  if (!rects.length) return;
+  
+	  const rect = rects[Math.floor(Math.random() * rects.length)];
+	  const drip = document.createElement("span");
+	  drip.className = "drip";
+	  const width = 8 + Math.random() * 6;
+	  const height = Math.round(width * 1.4);
+	  const left = rect.left + Math.random() * rect.width;
+	  const startY = rect.top + window.scrollY - height + 50;
+	  drip.style.position = "absolute";
+	  drip.style.left = left + "px";
+	  drip.style.top = startY + "px";
+	  drip.style.width = width + "px";
+	  drip.style.height = height + "px";
+	  drip.style.borderRadius = "65% 0 65% 25%";
+	  drip.style.transform = "rotate(-30deg)";
+	  drip.style.background = "radial-gradient(circle at 50% 0%, rgba(255,80,80,1), #6b0000 80%)";
+	  drip.style.pointerEvents = "none";
+	  drip.style.zIndex = "1";
+	  document.body.appendChild(drip);
+  
+	  const endY = mainBottom - height;
+	  const startTime = performance.now();
+	  const duration = 1500 + Math.random() * 800;
+  
+	  function animate(time) {
+		const elapsed = time - startTime;
+		let progress = Math.min(elapsed / duration, 1);
+		let easedProgress = Math.pow(progress, 2);
+		drip.style.top = startY + (endY - startY) * easedProgress + "px";
+		if (progress < 1 && document.body.contains(drip)) requestAnimationFrame(animate);
+		else drip.remove();
+	  }
+	  requestAnimationFrame(animate);
+	}
+  
+	const dripInterval = setInterval(() => {
+	  if (!document.body.contains(h1)) clearInterval(dripInterval);
+	  else spawnDrip();
+	}, 1000);
+  }
+
+  function typeWriterEffect(element, html, speed = 10, callback, onBrUpdate) {
+	  element.innerHTML = "";
+	  let i = 0;
+	  let brCount = 0;
+  
+	  function typing() {
+		  if (i < html.length) {
+			  if (html.substr(i, 4) === "<br>") {
+				  element.innerHTML += "<br>";
+				  i += 4;
+				  brCount++;
+				  if (onBrUpdate) onBrUpdate(brCount);
+			  } else if (html.substr(i, 5) === "<br/>") {
+				  element.innerHTML += "<br/>";
+				  i += 5;
+				  brCount++;
+				  if (onBrUpdate) onBrUpdate(brCount);
+			  } else {
+				  element.innerHTML += html.charAt(i);
+				  i++;
+			  }
+			  setTimeout(typing, speed);
+		  } else {
+			  if (callback) callback();
+		  }
+	  }
+	  typing();
+  }
+
+  let thunderTimeoutId = null;
+  
+  function startThunderFlash() {
+	const thunder = document.getElementById("thunderSound");
+	thunder.volume = 0.3;
+  
+	function thunderFlash() {
+	  const time = Math.random() * 11000 + 10000;
+	  thunderTimeoutId = setTimeout(() => {
+		thunder.currentTime = 0;
+		thunder.play().catch(err => console.warn("Kon donder niet starten:", err));
+		thunderFlash();
+	  }, time);
+	}
+	thunderFlash();
+  }
+  
+  function stopThunderFlash() {
+	clearTimeout(thunderTimeoutId);
+	thunderTimeoutId = null;
+	const thunder = document.getElementById("thunderSound");
+	if (thunder) {
+	  thunder.pause();
+	  thunder.currentTime = 0;
+	}
+  }
+  
+  const screams = [
+	document.getElementById("scream1"),
+	document.getElementById("scream2")
+  ];
+  
+  function startScreams() {
+	screams.forEach(scream => {
+	  scream.currentTime = 0;
+	  scream.play();
+	});
+  }
+  
+  function stopScreams() {
+	screams.forEach(scream => {
+	  scream.pause();
+	  scream.currentTime = 0;
+	});
+  }
+  
+  function startAmbientLoop() {
+	const ambient1 = document.getElementById("ambientSound");
+	const ambient2 = document.getElementById("ambientSound2");
+	const ambient3 = document.getElementById("ambientSound3");
+	const ambient4 = document.getElementById("ambientSound4");
+	const ambient5 = document.getElementById("ambientSound5");
+  
+	[ambient1, ambient2].forEach((sound, index) => {
+	  if (sound) {
+		sound.loop = true;
+		sound.currentTime = 0;
+		sound.play().catch(err => {
+		  console.warn(`Kon ambient${index + 1} niet starten:`, err);
+		});
+	  }
+	});
+
+	const ambientPool = [ambient3, ambient4, ambient5].filter(Boolean);
+  
+	function ambientRandomFlash() {
+	  const time = Math.random() * 20000 + 15000;
+	  ambientTimeoutId = setTimeout(() => {
+		if (ambientPool.length > 0) {
+		  const sound = ambientPool[Math.floor(Math.random() * ambientPool.length)];
+		  sound.currentTime = 0;
+		  sound.play().catch(err => console.warn("Kon ambient random niet starten:", err));
+		}
+		ambientRandomFlash();
+	  }, time);
+	}
+	ambientRandomFlash();
+  }
+  
+  function stopAmbientLoop() {
+	const ambient1 = document.getElementById("ambientSound");
+	const ambient2 = document.getElementById("ambientSound2");
+	const ambient3 = document.getElementById("ambientSound3");
+	const ambient4 = document.getElementById("ambientSound4");
+	const ambient5 = document.getElementById("ambientSound5");
+  
+	[ambient1, ambient2, ambient3, ambient4, ambient5].forEach(sound => {
+	  if (sound) {
+		sound.pause();
+		sound.currentTime = 0;
+	  }
+	});
+  
+	clearTimeout(ambientTimeoutId);
+	ambientTimeoutId = null;
+  }
+
+  function stopAllAudio() {
+	stopThunderFlash();
+	stopScreams();
+	stopAmbientLoop();
+  }
+  
+  $(document).ready(function () {
+    $(".main, .main-initial").css("position", "relative");
+    
+    $(".sidebar button").css("pointer-events", "none");
+  
+    const totalStones = 6;
+    let currentId = 0;
+	  
+  function scheduleSequence(steps) {
+	let start = performance.now();
+  
+	function runStep(i) {
+	  if (i >= steps.length) return;
+	  let [delay, action] = steps[i];
+	  let target = start + delay;
+  
+	  function check(now) {
+		if (now >= target) {
+		  action();
+		  runStep(i + 1);
+		} else {
+		  requestAnimationFrame(check);
+		}
+	  }
+  
+	  requestAnimationFrame(check);
+	}
+  
+	runStep(0);
+  }
+
+  function animateStone(id) {
+	const $button = $(".sidebar button[data-id='" + id + "']");
+	const hoverSound = $("#hoverSound")[0];
+	const clickSound = $("#clickSound")[0];
+	const heartbeat = $("#heartbeat")[0];
+  
+	if (id === 1) {
+	  heartbeat.loop = true;
+	  heartbeat.currentTime = 0;
+	  heartbeat.play();
+	} else {
+	  heartbeat.pause();
+	  heartbeat.currentTime = 0;
+	}
+  
+	$button.animate({ transform: "translateX(30%)" }, 500, function() {
+	  hoverSound.currentTime = 0;
+	  hoverSound.play();
+  
+	  $button.addClass("active").animate({ transform: "translateX(10%)" }, 1000, function() {
+		clickSound.currentTime = 0;
+		clickSound.play();
+  
+		const $currentContent = $(".main .content[data-id='" + id + "']");
+		const $prevContent = $(".main .content:visible");
+  
+		if (($prevContent.attr("data-id") === "2" && id === 3) ||
+			($prevContent.attr("data-id") === "3" && id === 4)) {
+		  $prevContent.hide();
+		  $currentContent.show();
+		} else {
+		  $(".main .main-initial").fadeOut(300);
+		  $prevContent.fadeOut(0);
+		  $currentContent.fadeIn(300);
+		}
+  
+		const dataId = $currentContent.attr("data-id");
+  
+		$currentContent.find("p").each((_, el) => {
+		  el.dataset.original = el.innerHTML;
+		  el.innerHTML = "";
+		});
+  
+		if (dataId === "2") {
+		  $currentContent.css("background-image", "url('afbeeldingen/content2.png')");
+		} else if (dataId === "3") {
+		  createCandlesID2($currentContent);
+		  $currentContent.addClass("flicker-active");
+		} else if (dataId === "4") {
+		  $currentContent.css("background-image", "url('afbeeldingen/content2b.png')");
+		  createCandlesID4($currentContent);
+		  $currentContent.addClass("flicker-active");
+		  const kaarsIntervallen = [13000, 14000, 16000, 18000, 20500, 22000, 26000];
+		  extinguishCandlesID4($currentContent, kaarsIntervallen);
+		}
+  
+		$currentContent.fadeIn(300, function() {
+		  const texts = this.querySelectorAll("p");
+  
+		  texts.forEach(el => {
+			typeWriterEffect(el, el.dataset.original, 20, () => {
+			  if (dataId === "2") {
+				$currentContent.addClass("flash-bg");
+				$currentContent.css("background-image", "url('afbeeldingen/content2a.png')");
+				createCandlesID2($currentContent);
+				$currentContent.one("animationend", function () {
+				  $currentContent.removeClass("flash-bg");
+				});
+				$currentContent.addClass("flicker-active");
+
+				scheduleSequence([
+				  [6500, () => nextStone()]
+				]);
+			  }
+			});
+		  });
+  
+		  if (dataId === "1") {
+			scheduleSequence([
+			  [15000, () => {
+				const sound = document.getElementById("lighter");
+				if (sound) {
+				  sound.currentTime = 0;
+				  sound.play().catch(err => console.warn("Kon lighter niet starten:", err));
+				}
+			  }],
+			  [15700, () => {
+				$currentContent.css({
+				  backgroundImage: "url('afbeeldingen/content1.png')",
+				  backgroundSize: "60% auto",
+				  backgroundPosition: "center",
+				  backgroundRepeat: "no-repeat"
+				});
+			  }],
+			  [19500, () => nextStone()]
+			]);
+		  }
+  
+		  if (dataId === "3") {
+			scheduleSequence([
+			  [21500, () => nextStone()]
+			]);
+		  }
+  
+		  if (dataId === "4") {
+			stopAllAudio();
+			scheduleSequence([
+			  [26500, () => nextStone()]
+			]);
+		  }
+  
+		  if (dataId === "5" && !$currentContent.data("imageContainerCreated")) {
+			const $imageContainer = $('<div class="image-slide-container"></div>');
+			const $firstImage = $('<div class="image-slide active"></div>').css({
+			  "background-image": "url('afbeeldingen/content2b.png')",
+			  "background-size": "cover",
+			  "background-position": "center 80%"
+			});
+			$imageContainer.append($firstImage);
+			$currentContent.prepend($imageContainer);
+			$currentContent.data("imageContainerCreated", true);
+  
+			scheduleSequence([
+			  [500, () => {
+				if (!$currentContent.data("audioPlayed")) {
+				  $currentContent.data("audioPlayed", true);
+				  const audio = new Audio("audio/scrape.mp3");
+				  audio.play();
+				}
+			  }],
+			  [1500, () => {
+				if (!$currentContent.data("audioPlayed")) {
+				  $currentContent.data("audioPlayed", true);
+				  const audio = new Audio("audio/lighter.mp3");
+				  audio.play();
+				}
+			  }],
+			  [5500, () => {
+				if (!$currentContent.data("switched1")) {
+				  $currentContent.data("switched1", true);
+				  const $currentImage = $imageContainer.find(".image-slide.active");
+				  const $newImage = $('<div class="image-slide start-left"></div>').css({
+					"background-image": "url('afbeeldingen/content5a.png')",
+					"background-size": "cover",
+					"background-position": "center 80%"
+				  });
+				  $imageContainer.append($newImage);
+				  $currentImage.addClass("slide-out-right").removeClass("active");
+				  requestAnimationFrame(() => {
+					$newImage[0].offsetHeight;
+					$newImage.removeClass("start-left").addClass("active");
+				  });
+				}
+			  }],
+			  [7000, () => {
+				const sound = document.getElementById("lighter");
+				if (sound) {
+				  sound.currentTime = 0;
+				  sound.play().catch(err => console.warn("Kon lighter niet starten:", err));
+				}
+			  }],
+			  [8000, () => {
+				if (!$currentContent.data("switched2")) {
+				  $currentContent.data("switched2", true);
+				  const $currentImage = $imageContainer.find(".image-slide.active");
+				  $currentImage.css({
+					"background-image": "url('afbeeldingen/content5b.png')",
+					"background-size": "contain",
+					"background-position": "center",
+					"background-color": "black"
+				  });
+				  $currentContent.addClass("flash-bg");
+				  $currentContent.one("animationend", function () {
+					$currentContent.removeClass("flash-bg");
+				  });
+				}
+			  }],
+			  [20500, () => nextStone()]
+			]);
+		  }
+		  if (dataId === "6" && !$currentContent.data("sequenceStarted")) {
+			  $currentContent.data("sequenceStarted", true);
+
+			  const $textElement = $currentContent.find("p");
+			  $textElement.hide();
+
+			  const $mediaContainer = $('<div></div>').css({
+				  position: 'relative',
+				  width: '100%',
+				  height: '100%',
+				  overflow: 'hidden',
+				  display: 'flex',
+				  justifyContent: 'center',
+				  alignItems: 'center',
+				  backgroundColor: 'black'
+			  });
+		  
+			  $currentContent.prepend($mediaContainer);
+		  
+			  const $video1 = $('<video class="content-video" autoplay playsinline></video>').attr({
+				  src: 'video/scream.mp4',
+				  type: 'video/mp4'
+			  }).css({
+				  position: "absolute",
+				  top: 0,
+				  left: 0,
+				  width: "100%",
+				  height: "100%",
+				  objectFit: "contain",
+				  objectPosition: "center",
+				  display: "block"
+			  });
+		  
+			  $mediaContainer.append($video1);
+
+			  function playAudioSequence(sequence) {
+				  sequence.forEach(item => {
+					  const audio = new Audio(item.src);
+					  setTimeout(() => {
+						  audio.play().catch(e => console.warn('Audio kon niet starten:', e));
+					  }, item.delay || 0);
+				  });
+			  }
+
+			  playAudioSequence([{ src: 'audio/welkomthuis.wav', delay: 24700 }]);
+			  playAudioSequence([{ src: 'audio/scream4.mp3', delay: 26300 }]);
+		  
+			  $video1.on('ended', function () {
+				  $video1.remove();
+	  
+				  const $blackScreen = $('<div></div>').css({
+					  width: "100%",
+					  height: "100%",
+					  backgroundColor: "black",
+					  position: "absolute",
+					  top: 0,
+					  left: 0,
+					  zIndex: 1
+				  });
+				  $mediaContainer.append($blackScreen);
+
+				  setTimeout(() => {
+					  $textElement.css({
+						  position: "absolute",
+						  top: "10%",
+						  width: "60%",
+						  left: "10%",
+						  color: "white",
+						  fontSize: "1.4rem",
+						  textAlign: "left",
+						  textShadow: "0 0 8px black",
+						  zIndex: 10
+					  }).show();
+  
+					  typeWriterEffect($textElement[0], $textElement.data("original"), 25);
+				  }, 500);
+
+				  setTimeout(() => {
+					$blackScreen.remove();
+					$textElement.fadeOut(500);
+				  
+					const $image2 = $('<img src="afbeeldingen/content6b.png">').css({
+						position: "absolute",
+						top: 0,
+						left: 0,
+						width: "100%",
+						height: "100%",
+						objectFit: "contain",
+						objectPosition: "center",
+						display: "block",
+						opacity: 0,
+						transition: "opacity 2s ease"
+					});
+				  
+					$image2.on("load", function() {
+					  $mediaContainer.append($image2);
+					  requestAnimationFrame(() => $image2.css("opacity", 1));
+					});
+				  }, 11000);
+
+				  setTimeout(() => {
+					  location.reload();
+				  }, 19000);
+			  });
+		  }
+		});
+	  });
+	});
+  }
+  
+  function createCandlesID2($container) {
+	const candles = [
+	  {left: "22.5%", top: "89%", size: "100px"},  
+	  {left: "34%",   top: "60.5%", size: "70px"}, 
+	  {left: "40%",   top: "45%", size: "40px"},
+	  {left: "60%",   top: "46.5%", size: "40px"},
+	  {left: "65.7%", top: "55.5%", size: "80px"},  
+	  {left: "74.5%", top: "73.5%", size: "100px"},
+	  {left: "85%", top: "98%", size: "100px"}
+	];
+  
+	const flickerVariants = ["candle-flicker-1", "candle-flicker-2", "candle-flicker-3"];
+
+	candles.forEach(c => {
+	  const $candle = $(`
+		<div class="candle-wrapper" style="left:${c.left}; top:${c.top}; width:${c.size}; height:${c.size};">
+		  <div class="candle"></div>
+		  <div class="candle-flame"></div>
+		</div>
+	  `);
+
+	  $container.append($candle);
+
+	  const variant = flickerVariants[Math.floor(Math.random() * flickerVariants.length)];
+
+	  const duration = (2 + Math.random() * 2).toFixed(2) + "s";
+	  const delay = (Math.random() * 2).toFixed(2) + "s";
+
+	  $candle.find(".candle").css("animation", `${variant} ${duration} infinite alternate ${delay}`);
+	  $candle.find(".candle-flame").css("animation", `${variant} ${duration} infinite alternate ${delay}`);
+	});
+  }
+  
+  function createCandlesID4($container) {
+	const candles = [
+	  {left: "60.2%", top: "3%", size: "40px"},
+	  {left: "40%", top: "3%", size: "40px"},
+	  {left: "65.8%", top: "16%", size: "60px"},
+	  {left: "34%", top: "20%", size: "70px"},
+	  {left: "74.3%", top: "35.5%", size: "80px"},
+	  {left: "22.5%", top: "51%", size: "100px"},
+	  {left: "84.5%", top: "66.5%", size: "120px"}
+	];
+  
+	const flickerVariants = ["candle-flicker-1", "candle-flicker-2", "candle-flicker-3"];
+
+	candles.forEach(c => {
+	  const $candle = $(`
+		<div class="candle-wrapper" style="left:${c.left}; top:${c.top}; width:${c.size}; height:${c.size};">
+		  <div class="candle"></div>
+		  <div class="candle-flame"></div>
+		</div>
+	  `);
+
+	  $container.append($candle);
+
+	  const variant = flickerVariants[Math.floor(Math.random() * flickerVariants.length)];
+
+	  const duration = (2 + Math.random() * 2).toFixed(2) + "s";
+	  const delay = (Math.random() * 2).toFixed(2) + "s";
+
+	  $candle.find(".candle").css("animation", `${variant} ${duration} infinite alternate ${delay}`);
+	  $candle.find(".candle-flame").css("animation", `${variant} ${duration} infinite alternate ${delay}`);
+	});
+  }
+  
+  function extinguishCandlesID4($content, intervals) {
+	const $candles = $content.find(".candle-wrapper");
+	const total = $candles.length;
+  
+	$candles.each((index, candle) => {
+	  setTimeout(() => {
+		$(candle).find(".candle-flame").fadeOut(500);
+		$(candle).find(".candle").fadeOut(500);
+
+		const remaining = total - (index + 1);
+  
+		if (remaining > total * 0.66) {
+		  $content.removeClass("flicker-medium flicker-weak")
+				  .addClass("flicker-strong");
+		} else if (remaining > total * 0.33) {
+		  $content.removeClass("flicker-strong flicker-weak")
+				  .addClass("flicker-medium");
+		} else if (remaining > 0) {
+		  $content.removeClass("flicker-strong flicker-medium")
+				  .addClass("flicker-weak");
+		} else {
+		  setTimeout(() => {
+			$content.removeClass("flicker-strong flicker-medium flicker-weak");
+			$content.addClass("eye-adjust");
+		  }, 300);
+		}
+	  }, intervals[index]);
+	});
+  }
+	//function nextStone() {
+	  //Skip direct naar data-id 6 voor testdoeleinden
+	  //currentId = 4;
+	  //animateStone(currentId);
+	//}
+    function nextStone() {
+      if (currentId < totalStones) {
+        currentId++;
+        animateStone(currentId);
+      }
+    }
+  
+    function startExperience() {
+      startScreams();
+      startAmbientLoop();
+      wallCloseEffect();
+	  startThunderFlash();
+    }
+  
+	function wallCloseEffect() {
+	  setTimeout(() => {
+		if (typeof nextStone === "function") {
+		  nextStone();
+		}
+	  }, 5500);
+	}
+	
+	$(function(){
+	  $("#start-experience").on("click", function(){
+		$("#intro-screen").fadeOut(1000, function(){
+		  //Video uitgeschakeld: direct doen alsof hij is afgespeeld
+		  $("#intro-video").show()[0].play();  //<-- deze regel even weglaten
+	
+		  // Simuleer dat de video klaar is
+		  //$("#intro-video").trigger("ended");
+		});
+	  });
+	
+	  $("#intro-video").on("contextmenu", function(e){ e.preventDefault(); });
+	  $(document).on("keydown", function(e){
+		if([32,37,39,75].includes(e.keyCode)){ e.preventDefault(); }
+	  });
+	
+	  $("#intro-video").on("ended", function(){
+		$("#intro-video").fadeOut(1000, function(){
+		  $("header, .container, footer").css({
+			"opacity": "1",
+			"visibility": "visible"
+		  });
+		  startExperience();
+		});
+	  });
+	});
+
+  });
+  </script>
+</body>
+</html>
