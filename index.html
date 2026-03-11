@@ -134,8 +134,19 @@
       margin: 0;
     }
     p {
+	  position: absolute;
       font-size:large;
+	  z-index:2;
     }
+	.bg-video{
+	  position:absolute;
+	  top:0;
+	  left:0;
+	  width:100%;
+	  height:100%;
+	  object-fit:cover;
+	  z-index:1;
+	}
 	.content[data-id="5"] p {
 	  position: relative;
 	  z-index: 2;
@@ -209,11 +220,11 @@
 	  overflow: hidden;
 	}
 	.content[data-id="4"] {
-	  background-image: url('afbeeldingen/content2b.png');
 	  position: relative;
 	  overflow: hidden;
   	  filter: brightness(1.6);
 	  background-position:center 92%;
+	  background-size: cover;
     }
 	
 	@keyframes candleFlicker {
@@ -462,7 +473,7 @@
       
       <div class="content" data-id="4">
         <p>Geen regendruppels, geen wind, zelfs geen echo meer van je ademhaling. Je stopt. Houdt je adem in. De stilte is te stil. Alsof zelfs het geluid bang is geworden.
-Je probeert je te focussen, je gedachten bij elkaar te houden. Het is gewoon een oude gang. Niets meer. Je verbeeldt je dit. Toch trekt de kloppende pijn van de wond in je hand door je lijf. Wat je er aan herinnert dat je lichaam hier kwetsbaar en echt is.<br><br>Plotseling dooft de eerste kaars. Dan de tweede.<br>Eén voor één vallen ze uit, alsof een onzichtbare hand het vuur smoort.<br>De duisternis kruipt dichterbij. Je hart bonst.<br>Je kijkt naar de muur links van je en pas dan zie je ze: krassen.<br>Tientallen krassen, dwars door het steen, als nagelstrepen.<br>Alsof iemand wanhopig geprobeerd heeft een weg naar buiten te krabben.<br>Je mond is droog. Je slikt moeizaam.<br>De laatste kaars flakkert. En dooft uit.<br><br>Pikdonker.</p>
+Je probeert je te focussen, je gedachten bij elkaar te houden. Het is gewoon een oude gang. Niets meer. Je verbeeldt je dit. Toch trekt de kloppende pijn van de wond in je hand door je lijf. Wat je er aan herinnert dat je lichaam hier kwetsbaar en echt is.<br><br>Plotseling dooft de eerste kaars. Dan de tweede.<br>Eén voor één vallen ze uit, alsof een onzichtbare hand het vuur smoort.<br>Je kijkt naar de muur links van je en pas dan zie je ze: krassen.<br>Tientallen krassen, dwars door het steen, als nagelstrepen.<br>Alsof iemand wanhopig geprobeerd heeft een weg naar buiten te krabben.<br>Je mond is droog. Je slikt moeizaam.<br>De laatste kaars flakkert. En dooft uit.<br><br>Pikdonker.</p>
       </div>
       
       <div class="content" data-id="5">
@@ -765,11 +776,18 @@ En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
 		  createCandlesID2($currentContent);
 		  $currentContent.addClass("flicker-active");
 		} else if (dataId === "4") {
-		  $currentContent.css("background-image", "url('afbeeldingen/content2b.png')");
-		  createCandlesID4($currentContent);
-		  $currentContent.addClass("flicker-active");
-		  const kaarsIntervallen = [13000, 14000, 16000, 18000, 20500, 22000, 26000];
-		  extinguishCandlesID4($currentContent, kaarsIntervallen);
+		  $currentContent.css("background-image", "none");
+		  if (!$currentContent.find(".bg-video").length) {
+			const video = $(`
+			  <video class="bg-video" autoplay muted playsinline>
+				<source src="video/vlam.mp4" type="video/mp4">
+			  </video>
+			`);
+			$currentContent.prepend(video);
+			video.on("ended", function () {
+			  $(this).fadeOut(1000);
+			});
+		  }	
 		}
   
 		$currentContent.fadeIn(300, function() {
@@ -893,7 +911,7 @@ En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
 				  });
 				}
 			  }],
-			  [20500, () => nextStone()]
+			  [19500, () => nextStone()]
 			]);
 		  }
 		  if (dataId === "6" && !$currentContent.data("sequenceStarted")) {
@@ -1071,41 +1089,6 @@ En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
 	  $candle.find(".candle-flame").css("animation", `${variant} ${duration} infinite alternate ${delay}`);
 	});
   }
-  
-  function extinguishCandlesID4($content, intervals) {
-	const $candles = $content.find(".candle-wrapper");
-	const total = $candles.length;
-  
-	$candles.each((index, candle) => {
-	  setTimeout(() => {
-		$(candle).find(".candle-flame").fadeOut(500);
-		$(candle).find(".candle").fadeOut(500);
-
-		const remaining = total - (index + 1);
-  
-		if (remaining > total * 0.66) {
-		  $content.removeClass("flicker-medium flicker-weak")
-				  .addClass("flicker-strong");
-		} else if (remaining > total * 0.33) {
-		  $content.removeClass("flicker-strong flicker-weak")
-				  .addClass("flicker-medium");
-		} else if (remaining > 0) {
-		  $content.removeClass("flicker-strong flicker-medium")
-				  .addClass("flicker-weak");
-		} else {
-		  setTimeout(() => {
-			$content.removeClass("flicker-strong flicker-medium flicker-weak");
-			$content.addClass("eye-adjust");
-		  }, 300);
-		}
-	  }, intervals[index]);
-	});
-  }
-	//function nextStone() {
-	  //Skip direct naar data-id 6 voor testdoeleinden
-	  //currentId = 4;
-	  //animateStone(currentId);
-	//}
     function nextStone() {
       if (currentId < totalStones) {
         currentId++;
