@@ -449,8 +449,8 @@
       <h1 align="center">Zijmuur</h1>
       <div class="button-wrapper"><button data-id="1">De Ingang</button><div class="hole"></div></div>
       <div class="button-wrapper"><button data-id="2">Pijnlijke gang</button><div class="hole"></div></div>
-      <div class="button-wrapper"><button data-id="3">De Echo's</button><div class="hole"></div></div>
-      <div class="button-wrapper"><button data-id="4">De Martelkamer</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="3">Levend Licht</button><div class="hole"></div></div>
+      <div class="button-wrapper"><button data-id="4">Niet alleen...</button><div class="hole"></div></div>
       <div class="button-wrapper"><button data-id="5">Het Hart Van De Duisternis</button><div class="hole"></div></div>
       <div class="button-wrapper"><button data-id="6">Welkom thuis...</button><div class="hole"></div></div>
     </aside>
@@ -1114,11 +1114,7 @@ En dan hoor je, vlak bij je oor, een zachte fluistering:</p>
 	$(function(){
 	  $("#start-experience").on("click", function(){
 		$("#intro-screen").fadeOut(1000, function(){
-		  //Video uitgeschakeld: direct doen alsof hij is afgespeeld
-		  $("#intro-video").show()[0].play();  //<-- deze regel even weglaten
-	
-		  // Simuleer dat de video klaar is
-		  //$("#intro-video").trigger("ended");
+		  $("#intro-video").show()[0].play();
 		});
 	  });
 	
